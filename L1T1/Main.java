@@ -1,3 +1,5 @@
+package L1T1;
+
 import java.util.function.*;
 
 public class Main {
