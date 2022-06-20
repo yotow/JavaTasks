@@ -1,4 +1,4 @@
-package L3T1;
+package lesson3.task1_2_3;
 
 import java.io.*;
 import java.util.List;

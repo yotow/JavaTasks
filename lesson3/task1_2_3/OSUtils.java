@@ -1,8 +1,8 @@
-package L3T1;
+package lesson3.task1_2_3;
 
-import L3T1.exceptions.FileCreationException;
-import L3T1.exceptions.FolderCreationException;
-import L3T1.exceptions.WorkDirExistAndPermException;
+import lesson3.task1_2_3.exceptions.FileCreationException;
+import lesson3.task1_2_3.exceptions.FolderCreationException;
+import lesson3.task1_2_3.exceptions.WorkDirExistAndPermException;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import static L3T1.GameLogger.writeLog;
 
 public class OSUtils {
     static final String OS = System.getProperty("os.name").toLowerCase(Locale.ROOT);
@@ -36,9 +34,6 @@ public class OSUtils {
             replaceSlash(FILES_IN_GAMES_SRC_MAIN);
             replaceSlash(FILES_IN_GAMES_TEMP);
             delim = '\\';
-        }
-
-        if (OS.contains("windows")) {
             workDir = WorkingDirectory.WINDOWS.toString();
         } else if (OS.contains("linux")) {
             workDir = WorkingDirectory.LINUX.toString();
@@ -46,18 +41,18 @@ public class OSUtils {
             workDir = WorkingDirectory.MAC.toString();
         }
 
-        tempDir = workDir + Arrays.stream(DIRS_IN_GAMES).filter(s -> s.contains("temp")).findFirst().get();
-        saveGamesDir = workDir + Arrays.stream(DIRS_IN_GAMES).filter(s -> s.contains("saveGames")).findFirst().get();
+        tempDir = pathConstructor(workDir, DIRS_IN_GAMES, "temp");
+        saveGamesDir = pathConstructor(workDir, DIRS_IN_GAMES, "saveGames");
         saveGamesZip = saveGamesDir + delim + "saved.zip";
-        tempFile = tempDir + Arrays.stream(FILES_IN_GAMES_TEMP).filter(s -> s.contains("temp")).findFirst().get();
+        tempFile = pathConstructor(getTempDir(), FILES_IN_GAMES_TEMP, "temp");
         try {
             createFile(tempFile);
         } catch (FileCreationException e) {
             throw new RuntimeException(e);
         }
-        writeLog("Операционная система " + OS + " определена\n");
-        writeLog("Структура каталогов определена\n");
-        writeLog("Файл логов создан\n");
+        GameLogger.writeLog("Операционная система " + OS + " определена");
+        GameLogger.writeLog("Структура каталогов определена");
+        GameLogger.writeLog("Файл логов создан");
     }
 
     public static String getTempDir() {
@@ -164,5 +159,9 @@ public class OSUtils {
                 || !workDirFile.canRead() || !workDirFile.canExecute()) {
             throw new WorkDirExistAndPermException("Директория Games не существует или недостачно прав");
         }
+    }
+
+    private static String pathConstructor(String dir, String[] strings, String string) {
+        return dir + Arrays.stream(strings).filter(s -> s.contains(string)).findFirst().get();
     }
 }

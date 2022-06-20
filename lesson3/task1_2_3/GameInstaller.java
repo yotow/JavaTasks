@@ -1,13 +1,13 @@
-package L3T1;
+package lesson3.task1_2_3;
 
-import L3T1.exceptions.FileCreationException;
-import L3T1.exceptions.FolderCreationException;
-import L3T1.exceptions.UnknownOsException;
+import lesson3.task1_2_3.exceptions.FileCreationException;
+import lesson3.task1_2_3.exceptions.FolderCreationException;
+import lesson3.task1_2_3.exceptions.UnknownOsException;
 
 import java.io.IOException;
 
-import static L3T1.GameLogger.*;
-import static L3T1.OSUtils.*;
+import static lesson3.task1_2_3.GameLogger.*;
+import static lesson3.task1_2_3.OSUtils.*;
 
 public class GameInstaller {
 
@@ -18,7 +18,7 @@ public class GameInstaller {
         final String workDirName = getWorkDir();
 
         checkExistAndPerm(workDirName);
-        writeLog("Директория Games существует, достаточно прав для продолжения установки\n");
+        writeLog("Директория Games существует, достаточно прав для продолжения установки");
 
         try {
             createDirectories(workDirName, DIRS_IN_GAMES);

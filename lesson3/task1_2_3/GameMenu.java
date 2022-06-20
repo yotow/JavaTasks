@@ -1,13 +1,13 @@
-package L3T1;
+package lesson3.task1_2_3;
 
-import L3T1.exceptions.*;
+import lesson3.task1_2_3.exceptions.*;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
-import static L3T1.GameLogger.flush;
-import static L3T1.GameLogger.writeLog;
+import static lesson3.task1_2_3.GameLogger.flush;
+import static lesson3.task1_2_3.GameLogger.writeLog;
 
 public class GameMenu {
 

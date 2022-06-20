@@ -1,19 +1,16 @@
-package L3T1;
+package lesson3.task1_2_3;
 
-import L3T1.exceptions.SaveErrorException;
-import L3T1.exceptions.UnknownOsException;
+import lesson3.task1_2_3.exceptions.SaveErrorException;
+import lesson3.task1_2_3.exceptions.UnknownOsException;
 
 import java.io.*;
-
-import static L3T1.GameLogger.getTime;
-import static L3T1.GameLogger.writeLog;
 
 public class GameSaver {
 
     private static final String EXT = ".save";
     static void save(GameProgress progress) throws UnknownOsException, SaveErrorException {
 
-        String path = OSUtils.getSaveGamesDir() + getTime() + EXT;
+        String path = OSUtils.getSaveGamesDir() + GameLogger.getTime() + EXT;
         System.out.println(path);
         File file = new File(path);
         try (FileOutputStream fos = new FileOutputStream(file);
@@ -21,7 +18,7 @@ public class GameSaver {
 
             oos.writeObject(progress);
         } catch (IOException e) {
-            writeLog("Ошибка сохранения игры");
+            GameLogger.writeLog("Ошибка сохранения игры");
             throw new SaveErrorException("Не удалось сохранить игру");
         }
     }
