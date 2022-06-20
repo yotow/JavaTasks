@@ -1,4 +1,4 @@
-package L2T1;
+package lesson2.task1;
 
 import java.util.Arrays;
 import java.util.List;
