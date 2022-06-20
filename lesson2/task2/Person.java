@@ -1,4 +1,4 @@
-package L2T2;
+package lesson2.task2;
 
 class Person {
     private String name;
