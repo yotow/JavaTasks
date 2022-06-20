@@ -12,8 +12,7 @@ public enum WorkingDirectory {
         this.path = val;
     }
 
-    @Override
-    public String toString() {
+    public String getValue() {
         return this.path;
     }
 }

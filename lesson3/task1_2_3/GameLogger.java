@@ -29,10 +29,6 @@ public class GameLogger {
         }
     }
 
-    static void flush(){
-        write();
-    }
-
     public static String getTime() {
         GregorianCalendar cannes = new GregorianCalendar();
         DateFormat df = new SimpleDateFormat("_dd_MM_yyyy_hh.mm.ss");

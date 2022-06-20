@@ -11,8 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static lesson3.task1_2_3.GameLogger.writeLog;
+
 public class OSUtils {
     static final String OS = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+
     static final String[] DIRS_IN_GAMES = {"/src", "/res", "/saveGames", "/temp"};
     static final String[] DIRS_IN_GAMES_RES = {"/res/drawables", "/res/vectors", "/res/icons"};
     static final String[] DIRS_IN_GAMES_SRC = {"/src/main", "/src/test"};
@@ -26,19 +29,19 @@ public class OSUtils {
     private static String tempDir;
     private static String tempFile;
 
-    static void init() {
+    static void init() throws FolderCreationException {
         if (OS.contains("windows")) {
+            delim = '\\';
+            workDir = WorkingDirectory.WINDOWS.getValue();
             replaceSlash(DIRS_IN_GAMES);
             replaceSlash(DIRS_IN_GAMES_RES);
             replaceSlash(DIRS_IN_GAMES_SRC);
             replaceSlash(FILES_IN_GAMES_SRC_MAIN);
             replaceSlash(FILES_IN_GAMES_TEMP);
-            delim = '\\';
-            workDir = WorkingDirectory.WINDOWS.toString();
         } else if (OS.contains("linux")) {
-            workDir = WorkingDirectory.LINUX.toString();
+            workDir = WorkingDirectory.LINUX.getValue();
         } else if (OS.contains("mac")) {
-            workDir = WorkingDirectory.MAC.toString();
+            workDir = WorkingDirectory.MAC.getValue();
         }
 
         tempDir = pathConstructor(workDir, DIRS_IN_GAMES, "temp");
@@ -47,12 +50,27 @@ public class OSUtils {
         tempFile = pathConstructor(getTempDir(), FILES_IN_GAMES_TEMP, "temp");
         try {
             createFile(tempFile);
-        } catch (FileCreationException e) {
+
+            writeLog("Операционная система " + OS + " определена");
+            writeLog("Структура каталогов определена");
+            writeLog("Файл логов создан");
+
+            checkExistAndPerm(workDir);
+            writeLog("Директория Games существует, достаточно прав для продолжения установки");
+            createDirectories(workDir, DIRS_IN_GAMES);
+            writeLog("Созданы директории в Games/");
+            createDirectories(workDir, DIRS_IN_GAMES_RES);
+            writeLog("Созданы директории в Games/res");
+            createDirectories(workDir, DIRS_IN_GAMES_SRC);
+            writeLog("Созданы директории в Games/src");
+            createFiles(workDir, FILES_IN_GAMES_SRC_MAIN);
+            writeLog("Созданы файлы в Games/main");
+        } catch (FolderCreationException e) {
+            writeLog("Не удалось создать директорию или файл" + e);
+            throw e;
+        } catch (WorkDirExistAndPermException | FileCreationException e) {
             throw new RuntimeException(e);
         }
-        GameLogger.writeLog("Операционная система " + OS + " определена");
-        GameLogger.writeLog("Структура каталогов определена");
-        GameLogger.writeLog("Файл логов создан");
     }
 
     public static String getTempDir() {
@@ -148,9 +166,13 @@ public class OSUtils {
     static void deleteFiles(List<String> paths) {
         for (String s :
                 paths) {
-            File file = new File(s);
-            file.delete();
+            deleteFile(s);
         }
+    }
+
+    public static void deleteFile(String s) {
+        File file = new File(s);
+        file.delete();
     }
 
     static void checkExistAndPerm(String workDir) throws WorkDirExistAndPermException {
