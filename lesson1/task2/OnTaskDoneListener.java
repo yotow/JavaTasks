@@ -1,4 +1,4 @@
-package L1T2;
+package lesson1.task2;
 
 @FunctionalInterface
 public interface OnTaskDoneListener {

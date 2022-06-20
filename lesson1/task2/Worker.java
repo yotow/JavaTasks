@@ -1,7 +1,4 @@
-package L1T2;
-
-import L1T2.OnTaskDoneListener;
-import L1T2.OnTaskErrorListener;
+package lesson1.task2;
 
 public class Worker {
 
