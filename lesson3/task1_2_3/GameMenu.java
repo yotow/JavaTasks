@@ -34,7 +34,6 @@ public class GameMenu {
         for (GameProgress progress : progresses) {
             writeLog("Игра восстановлена");
             writeLog(progress.toString());
-
         }
     }
 
