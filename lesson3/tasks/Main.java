@@ -1,11 +1,7 @@
-package lesson3.task1_2_3;
-
-import lesson3.task1_2_3.exceptions.FolderCreationException;
-
-import java.io.File;
+package lesson3.tasks;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException, FolderCreationException {
+    public static void main(String[] args) throws InterruptedException {
 
         //Установка
         GameMenu menu = GameMenu.init(); // Инициализация системы, создание путей, папок. Было бы проще с Paths...
@@ -18,9 +14,9 @@ public class Main {
         menu.saveGame(progress2);
         Thread.sleep(1000);
         menu.saveGame(progress3);
-        menu.zipFiles();
+        menu.zipFiles(OSUtils.getSaveGamesDir());
 
-        menu.loadSavedGame(); // распаковка ZIP
+        menu.loadSavedGame(OSUtils.getSaveGamesDir() + "/game.zip"); // распаковка ZIP
 
         menu.resumeInGame(); // Десериализация
     }

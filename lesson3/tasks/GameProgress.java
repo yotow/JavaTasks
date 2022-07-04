@@ -1,4 +1,4 @@
-package lesson3.task1_2_3;
+package lesson3.tasks;
 
 import java.io.Serial;
 import java.io.Serializable;

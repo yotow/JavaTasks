@@ -1,11 +1,13 @@
-package lesson3.task1_2_3;
+package lesson3.tasks;
 
-import lesson3.task1_2_3.exceptions.*;
+import lesson3.tasks.exceptions.FileCreationException;
+import lesson3.tasks.exceptions.SaveErrorException;
+import lesson3.tasks.exceptions.WorkDirExistAndPermException;
 
 import java.util.List;
 import java.util.Random;
 
-import static lesson3.task1_2_3.GameLogger.writeLog;
+import static lesson3.tasks.GameLogger.writeLog;
 
 public class GameMenu {
 
@@ -13,7 +15,7 @@ public class GameMenu {
         try {
             OSUtils.init();
             writeLog("Установка окончилась успешно");
-        } catch (FolderCreationException e) {
+        } catch (WorkDirExistAndPermException | FileCreationException e) {
             writeLog("Установка окончилась неуспешно" + e);
         }
         return new GameMenu();
@@ -29,7 +31,7 @@ public class GameMenu {
     }
 
     void resumeInGame() {
-        List<String> listSavedGames = OSUtils.getFiles(OSUtils.getSaveGamesDir());
+        List<String> listSavedGames = OSUtils.getFilesInDir(OSUtils.getSaveGamesDir());
         List<GameProgress> progresses = GameSaver.restoreGame(listSavedGames);
         for (GameProgress progress : progresses) {
             writeLog("Игра восстановлена");
@@ -40,26 +42,22 @@ public class GameMenu {
     void saveGame(GameProgress progress) {
         try {
             GameSaver.save(progress);
-        } catch (SaveErrorException | UnknownOsException e) {
-            System.out.println("Не удалось сохранить игру, попробуйте позже " + e);
+        } catch (SaveErrorException e) {
             writeLog("Не удалось сохранить игру, попробуйте позже");
         }
     }
 
-    void zipFiles() {
-        String pathToDir = OSUtils.getSaveGamesDir();
-        List<String> listFiles = OSUtils.getFiles(pathToDir);
-        String pathToZip = OSUtils.getSaveGamesZip();
-        Zipper.zipFiles(pathToZip, listFiles);
+    void zipFiles(String pathToDir) {
+        List<String> listFiles = OSUtils.getFilesInDir(pathToDir);
+        String nameZipFile = pathToDir + "/game.zip";
+        Zipper.zipFiles(nameZipFile, listFiles);
         writeLog("Игра сохранена успешно");
         OSUtils.deleteFiles(listFiles);
     }
 
-    void loadSavedGame() {
-        String pathToZip = OSUtils.getSaveGamesZip();
-        String destinationFolder = OSUtils.getSaveGamesDir();
-        Zipper.openZip(pathToZip, destinationFolder);
+    void loadSavedGame(String pathToZip) {
+        Zipper.openZip(pathToZip, pathToZip);
         writeLog("Архив с сохранением распакован");
-        OSUtils.deleteFile(OSUtils.getSaveGamesZip());
+        OSUtils.deleteFile(pathToZip);
     }
 }

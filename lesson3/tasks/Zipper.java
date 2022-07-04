@@ -1,4 +1,4 @@
-package lesson3.task1_2_3;
+package lesson3.tasks;
 
 import java.io.*;
 import java.util.List;
@@ -31,7 +31,9 @@ public class Zipper {
 
     // обертка для соответсвия заданию
     public static void openZip(String pathToZip, String pathToDestFolder) {
-        unZipFiles(pathToZip, pathToDestFolder);
+        File absPath = new File(pathToZip);
+        File absDestPath = new File(pathToDestFolder);
+        unZipFiles(absPath.getAbsolutePath(), absDestPath.getAbsolutePath());
     }
 
     private static void unZipFiles(String pathToZip, String pathToDestFolder) {

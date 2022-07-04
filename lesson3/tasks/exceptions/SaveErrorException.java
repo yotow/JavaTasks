@@ -1,6 +1,4 @@
-package lesson3.task1_2_3.exceptions;
-
-import java.io.IOException;
+package lesson3.tasks.exceptions;
 
 public class SaveErrorException extends Exception {
     public SaveErrorException(String message) {

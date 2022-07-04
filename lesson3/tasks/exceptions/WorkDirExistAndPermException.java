@@ -1,4 +1,4 @@
-package lesson3.task1_2_3.exceptions;
+package lesson3.tasks.exceptions;
 
 import java.io.IOException;
 

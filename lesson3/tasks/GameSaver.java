@@ -1,7 +1,6 @@
-package lesson3.task1_2_3;
+package lesson3.tasks;
 
-import lesson3.task1_2_3.exceptions.SaveErrorException;
-import lesson3.task1_2_3.exceptions.UnknownOsException;
+import lesson3.tasks.exceptions.SaveErrorException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ public class GameSaver {
 
     private static final String EXT = ".save";
 
-    static void save(GameProgress progress) throws UnknownOsException, SaveErrorException {
+    static void save(GameProgress progress) throws SaveErrorException {
         String path = OSUtils.getSaveGamesDir() + GameLogger.getTime() + EXT;
         System.out.println(path);
         File file = new File(path);

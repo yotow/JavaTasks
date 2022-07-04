@@ -1,4 +1,4 @@
-package lesson3.task1_2_3;
+package lesson3.tasks;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +15,7 @@ public class GameLogger {
 
     static void writeLog(String log) {
         sb.append(getTime()).append(": ").append(log).append("\n");
-        if (sb.length() > BUFFER) {
+        if (sb.length() > BUFFER && tempFile.exists()) {
             write();
         }
     }
