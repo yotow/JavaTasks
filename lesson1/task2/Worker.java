@@ -14,10 +14,9 @@ public class Worker {
         for (int i = 0; i < 100; i++) {
             try {
                 Thread.sleep(100);
-                if (i == 33) {
-                    errorCallback.onError("Task " + i + " is error");
-                }
-                doneCallback.onDone("Task " + i + " is done");
+                if (i != 33) {
+                    doneCallback.onDone("Task " + i + " is done");
+                } else errorCallback.onError("Task " + i + " is error");
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
